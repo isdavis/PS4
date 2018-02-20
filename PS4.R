@@ -106,9 +106,26 @@ wins
 
 #Still attempting to create a vector of doors with a specific value
 
+setGeneric("switchify", function(object="Door"){
+  standardGeneric("switchify")
+})
+setMethod("switchify", "Door", function(object){
+  object@switch<-TRUE
+})
+
+setGeneric("UNswitchify", function(object="Door"){
+  standardGeneric("UNswitchify")
+})
+setMethod("UNswitchify", "Door", function(object){
+  object@switch<-FALSE
+})
+
 s4Vec <- lapply( rep("Door", 1000), new)
-switchList<-rep(switcher, 1:1000)
-winsSwitch<-lapply(s4Vec, playGame)
+switchList<-lapply(s4Vec, switchify)
+winsSwitch<-lapply(switchList, playGame)
+traceback() #using traceback to see where the error here occurs
+#after looking more closely at the error, it seems that "switchify" just returns a vector of logicals, which it shouldnt do
+
 
 
 playGame(Ian)
