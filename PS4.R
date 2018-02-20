@@ -56,7 +56,8 @@ setGeneric("playGame", function(object="Door"){
   standardGeneric("playGame")
 })
 
-#Specifying what the generic method "playGame" actually does
+#Specifying what the generic method "playGame" actually does. 
+#There are several browser locations that I included to show where I checked the function. 
 
 setMethod("playGame", "Door", function(object){
   car<-sample(1:3, 1)
@@ -84,6 +85,10 @@ chump<-new("Door", doorChoice=1, carDoor=1, switch=F)
 
 playGame(switcher)
 playGame(chump)
+
+#These are 2 for loops that I included to test the ratios of wins to losses for each strategy. I don't know if my earlier 
+#commits went through, but the first time I did the function I did it incorrectly and was able to see that when each strategy
+#returned the same proportion of successes in these for loops. 
 
 wins<-0
 for(i in 1:1000) {
