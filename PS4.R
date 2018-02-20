@@ -104,6 +104,11 @@ for(i in 1:1000) {
 }
 wins
 
-#Play the game! 
+#Still attempting to create a vector of doors with a specific value
+
+s4Vec <- lapply( rep("Door", 1000), new)
+switchList<-rep(switcher, 1:1000)
+winsSwitch<-lapply(s4Vec, playGame)
+
 
 playGame(Ian)
