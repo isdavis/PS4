@@ -111,6 +111,9 @@ setGeneric("switchify", function(object="Door"){
 })
 setMethod("switchify", "Door", function(object){
   object@switch<-TRUE
+  object@doorChoice<-1
+  object@carDoor<-1
+  return(object)
 })
 
 setGeneric("UNswitchify", function(object="Door"){
@@ -118,14 +121,15 @@ setGeneric("UNswitchify", function(object="Door"){
 })
 setMethod("UNswitchify", "Door", function(object){
   object@switch<-FALSE
+  object@doorChoice<-1
+  object@carDoor<-1
+  return(object)
 })
 
 s4Vec <- lapply( rep("Door", 1000), new)
 switchList<-lapply(s4Vec, switchify)
 winsSwitch<-lapply(switchList, playGame)
-traceback() #using traceback to see where the error here occurs
-#after looking more closely at the error, it seems that "switchify" just returns a vector of logicals, which it shouldnt do
 
-
+#This looks like it works! now we have to develop a way to count the values 
 
 playGame(Ian)
