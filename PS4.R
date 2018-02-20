@@ -84,7 +84,9 @@ switcher<-new("Door", doorChoice=1, carDoor=1, switch=T)
 chump<-new("Door", doorChoice=1, carDoor=1, switch=F)
 
 playGame(switcher)
-playGame(chump)
+c<-playGame(chump)
+
+class(c)
 
 #These are 2 for loops that I included to test the ratios of wins to losses for each strategy. I don't know if my earlier 
 #commits went through, but the first time I did the function I did it incorrectly and was able to see that when each strategy
@@ -104,15 +106,13 @@ for(i in 1:1000) {
 }
 wins
 
-#Still attempting to create a vector of doors with a specific value
-
 setGeneric("switchify", function(object="Door"){
   standardGeneric("switchify")
 })
 setMethod("switchify", "Door", function(object){
   object@switch<-TRUE
-  object@doorChoice<-1
-  object@carDoor<-1
+  object@doorChoice<-sample(1:3, 1)
+  object@carDoor<-sample(1:3, 1)
   return(object)
 })
 
@@ -121,15 +121,23 @@ setGeneric("UNswitchify", function(object="Door"){
 })
 setMethod("UNswitchify", "Door", function(object){
   object@switch<-FALSE
-  object@doorChoice<-1
-  object@carDoor<-1
+  object@doorChoice<-sample(1:3, 1)
+  object@carDoor<-sample(1:3, 1)
   return(object)
 })
 
+install.packages("plyr")
+library(plyr)
 s4Vec <- lapply( rep("Door", 1000), new)
 switchList<-lapply(s4Vec, switchify)
-winsSwitch<-lapply(switchList, playGame)
+winsSwitch<-laply(switchList, playGame)
+summary(winsSwitch)
 
-#This looks like it works! now we have to develop a way to count the values 
+s4Vec <- lapply( rep("Door", 1000), new)
+NOswitchList<-lapply(s4Vec, UNswitchify)
+winsNOswitch<-laply(NOswitchList, playGame)
+summary(winsNOswitch)
 
-playGame(Ian)
+#IT works! by using the laply function, I can force the output into a vector of logicals which can be easily summarized to count
+#the number of times the car was won. The switch list has around 500 TRUE values, and the NO switch list has around 350.
+#Thus, switching is better! we have solved the monty hall problem. 
